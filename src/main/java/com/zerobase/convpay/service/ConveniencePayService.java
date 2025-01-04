@@ -13,16 +13,6 @@ public class ConveniencePayService {
         MoneyUseResult moneyUseResult =
                 moneyAdapter.use(payRequest.getPayAmount());
 
-        // fail test
-
-        // Method()
-
-        // exception case 1
-        // exception case 2
-        // exception case 3
-
-
-
         if(moneyUseResult == MoneyUseResult.USE_FAIL) {
             return new PayResponse(PayResult.FAIL, 0);
         }
@@ -30,6 +20,8 @@ public class ConveniencePayService {
         // Success Case
         return new PayResponse(PayResult.SUCCESS, payRequest.getPayAmount());
     }
+
+
 
     public PayCancelResponse payCancel(PayCancelRequest payCancelRequest){
         MoneyUseCancelResult moneyUseCancelResult = moneyAdapter.useCancel(payCancelRequest.getPayCancelAmount());
