@@ -1,19 +1,25 @@
 package com.zerobase.convpay.service;
 
 import com.zerobase.convpay.dto.*;
-import com.zerobase.convpay.type.MoneyUseCancelResult;
-import com.zerobase.convpay.type.MoneyUseResult;
-import com.zerobase.convpay.type.PayCancelResult;
-import com.zerobase.convpay.type.PayResult;
+import com.zerobase.convpay.type.*;
 
 public class ConveniencePayService {
     private final MoneyAdapter moneyAdapter = new MoneyAdapter();
+    private final CardAdapter cardAdapter = new CardAdapter();
 
     public PayResponse pay(PayRequest payRequest) {
-        MoneyUseResult moneyUseResult =
-                moneyAdapter.use(payRequest.getPayAmount());
+        CardUseResult cardUseResult;
+        MoneyUseResult moneyUseResult;
+        if(payRequest.getPayMethodType() == PayMethodType.CARD){
+            cardAdapter.authorization();
+            cardAdapter.approval();
+            cardUseResult = cardAdapter.capture(payRequest.getPayAmount());
+        }else {
+            moneyUseResult = moneyAdapter.use(payRequest.getPayAmount());
+        }
 
-        if(moneyUseResult == MoneyUseResult.USE_FAIL) {
+        if(cardUseResult == CardUseResult.USE_FAIL ||
+                moneyUseResult == MoneyUseResult.USE_FAIL) {
             return new PayResponse(PayResult.FAIL, 0);
         }
 

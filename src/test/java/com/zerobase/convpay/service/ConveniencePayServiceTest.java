@@ -50,7 +50,7 @@ class ConveniencePayServiceTest {
 
         //then
         assertEquals(PayCancelResult.PAY_CANCEL_SUCCESS, payCancelResponse.getPayCancelResult());
-        assertEquals(1000, payCancelResponse.getPayCanceledAmount());
+        assertEquals(1000, payCancelResponse.getPayCancelAmount());
     }
 
     @Test
@@ -63,7 +63,7 @@ class ConveniencePayServiceTest {
 
         //then
         assertEquals(PayCancelResult.PAY_CANCEL_FAIL, payCancelResponse.getPayCancelResult());
-        assertEquals(0, payCancelResponse.getPayCanceledAmount());
+        assertEquals(0, payCancelResponse.getPayCancelAmount());
     }
 
 }
